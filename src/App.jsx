@@ -34,10 +34,17 @@ function App() {
       <ul className="w-64 space-y-2">
         {list.map((entry, index) => (
           <li
-            key={index}
-            className="bg-white p-3 rounded-lg shadow flex justify-between"
+             key={index}
+            className="bg-white p-3 rounded-lg shadow flex justify-between items-center"
           >
-            {entry}
+            <span>{entry}</span>
+  
+            <button
+             onClick={() => setList(list.filter((_, i) => i !== index))}
+            className="text-red-500 hover:text-red-700"
+            >
+               x
+            </button>
           </li>
         ))}
       </ul>
