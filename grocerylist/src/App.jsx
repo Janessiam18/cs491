@@ -1,49 +1,58 @@
 import { useState } from "react";
 
 function App() {
+
   const [item, setItem] = useState("");
   const [list, setList] = useState([]);
 
   const addItem = () => {
-    if (!item.trim()) return; 
-    setList([...list, item]);
+    if (item === "") return;
+
+    const newList = [...list, item];
+    setList(newList);
     setItem("");
   };
 
+  const deleteItem = (index) => {
+    const newList = list.filter((item, i) => i !== index);
+    setList(newList);
+  };
+
   return (
-    <div className="min-h-screen bg-gray-100 flex flex-col items-center p-6">
+    <div className="min-h-screen flex flex-col items-center bg-gray-100 p-6">
 
-      <h1 className="text-4xl font-bold mb-6">Grocery List</h1>
+      <h1 className="text-3xl font-bold mb-4">Grocery List</h1>
 
-      <div className="flex gap-3 mb-6">
+      <div className="flex gap-2 mb-4">
         <input
+          type="text"
           value={item}
           onChange={(e) => setItem(e.target.value)}
-          placeholder="Enter an item..."
-          className="border px-3 py-2 rounded-lg shadow-sm"
+          placeholder="Add item..."
+          className="border p-2 rounded"
         />
 
         <button
           onClick={addItem}
-          className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600"
+          className="bg-blue-500 text-white px-4 rounded"
         >
-          +
+          Add
         </button>
       </div>
 
-      <ul className="w-64 space-y-2">
-        {list.map((entry, index) => (
+      <ul className="w-64">
+        {list.map((item, index) => (
           <li
-             key={index}
-            className="bg-white p-3 rounded-lg shadow flex justify-between items-center"
+            key={index}
+            className="flex justify-between bg-white p-2 mb-2 rounded"
           >
-            <span>{entry}</span>
-  
+            {item}
+
             <button
-             onClick={() => setList(list.filter((_, i) => i !== index))}
-            className="text-red-500 hover:text-red-700"
+              onClick={() => deleteItem(index)}
+              className="text-red-500"
             >
-               x
+              X
             </button>
           </li>
         ))}
